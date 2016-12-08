@@ -1,8 +1,8 @@
 language: rust
 sudo: false
 rust:
-- stable
-- beta
+  #- stable
+  #- beta
 - nightly
 addons:
   apt:
@@ -25,18 +25,16 @@ addons:
 
 env:
   global:
-  - BUILD_PREFIX=$PWD/tmp
-  - LIBRARY_PATH=$BUILD_PREFIX/lib
-  - PKG_CONFIG_PATH=$BUILD_PREFIX/lib/pkgconfig
+  - LIBRARY_PATH=$HOME/lib
+  - PKG_CONFIG_PATH=$HOME/lib/pkgconfig
 
 before_script:
 - pip install 'travis-cargo<0.2' --user
-- mkdir tmp
 - git clone --depth 1 -b stable https://github.com/jedisct1/libsodium.git
 - |
   cd libsodium &&
   ./autogen.sh &&
-  ./configure --prefix=${BUILD_PREFIX} &&
+  ./configure --prefix=$HOME &&
   make &&
   make install
 - wget https://github.com/zeromq/zeromq4-1/archive/v4.1.6.tar.gz
@@ -44,7 +42,7 @@ before_script:
 - |
   cd zeromq4-1-4.1.6 &&
   ./autogen.sh &&
-  ./configure --prefix=${BUILD_PREFIX} --with-libsodium &&
+  ./configure --prefix=$HOME --with-libsodium &&
   make &&
   make install
 script:
