@@ -25,6 +25,7 @@ addons:
 
 env:
   global:
+  - PATH=$HOME/.local/bin:$PATH
   - LIBRARY_PATH=$HOME/lib
   - PKG_CONFIG_PATH=$HOME/lib/pkgconfig
 
@@ -40,6 +41,7 @@ before_script:
 - wget https://github.com/zeromq/zeromq4-1/archive/v4.1.6.tar.gz
 - tar zxf v4.1.6.tar.gz
 - |
+  export PKG_CONFIG_PATH=$HOME/lib/pkgconfig &&
   cd zeromq4-1-4.1.6 &&
   ./autogen.sh &&
   ./configure --prefix=$HOME --with-libsodium &&
