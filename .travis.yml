@@ -32,21 +32,20 @@ env:
 before_script:
 - pip install 'travis-cargo<0.2' --user
 - git clone --depth 1 -b stable https://github.com/jedisct1/libsodium.git
-- |
-  cd libsodium &&
-  ./autogen.sh &&
-  ./configure --prefix=$HOME &&
-  make &&
-  make install
+- cd libsodium
+- ./autogen.sh
+- ./configure --prefix=$HOME
+- make
+- make install
+- cd ..
 - wget https://github.com/zeromq/zeromq4-1/archive/v4.1.6.tar.gz
 - tar zxf v4.1.6.tar.gz
-- |
-  export PKG_CONFIG_PATH=$HOME/lib/pkgconfig &&
-  cd zeromq4-1-4.1.6 &&
-  ./autogen.sh &&
-  ./configure --prefix=$HOME --with-libsodium &&
-  make &&
-  make install
+- cd zeromq4-1-4.1.6
+- ./autogen.sh
+- env PKG_CONFIG_PATH=$HOME/lib/pkgconfig ./configure --prefix=$HOME --with-libsodium
+- make
+- make install
+- cd ..
 script:
 - travis-cargo --skip nightly build
 - travis-cargo --only nightly build -- --features unstable
