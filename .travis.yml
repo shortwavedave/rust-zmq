@@ -26,6 +26,7 @@ addons:
 env:
   global:
   - BUILD_PREFIX=$PWD/tmp
+  - LIBRARY_PATH=$BUILD_PREFIX/lib
   - PKG_CONFIG_PATH=$BUILD_PREFIX/lib/pkgconfig
 
 before_script:
